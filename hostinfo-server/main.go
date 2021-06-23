@@ -9,7 +9,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"strings"
 )
 
 const (
@@ -20,28 +19,11 @@ type TestServer struct {
 	pb.UnimplementedTesterServer
 }
 
-func chop(s string) string {
-	s = strings.TrimRight(s, "\n")
-	if strings.HasSuffix(s, "\r") {
-		s = strings.TrimRight(s, "\r")
-	}
-	return s
-}
-
 func (s *TestServer) GetHostInfo(ctx context.Context, empty *emptypb.Empty) (*pb.HostInfo, error) {
-	//hostname, err := exec.Command("hostname").Output()
-	//if err != nil{
-	//	fmt.Printf("%v", err)
-	//}
-	//ip, err := exec.Command("hostname", "-i").Output()
-	//if err != nil{
-	//	fmt.Printf("%v", err)
-	//}
 	hostname, err := os.Hostname()
 	if err != nil{
 		fmt.Printf("%v", err)
 	}
-	//return &pb.HostInfo{HostnameAndIp: chop(string(hostname)) + " : " + chop(string(ip)) }, nil
 	log.Printf("request received")
 	return &pb.HostInfo{HostnameAndIp: string(hostname)}, nil
 }

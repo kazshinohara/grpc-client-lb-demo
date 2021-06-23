@@ -1,6 +1,6 @@
 # gRPC Client-side load balancing demo
 
-A demo application shows gRPC Client-side load balancing with k8s headless services in DNS round robin manner.
+A demo application shows gRPC Client-side load balancing with k8s headless services in DNS Round Robin manner.
 
 ## How to use
 ### 1. build container images
@@ -68,7 +68,7 @@ kubectl logs {{client_pod_name}}
 ```
 
 You will see the requests (Unary gRPC) from client to server have been load-balanced like below.
-The server has 3 replicas, and each request went to ene of them in Round Robin manner.
+The server has 3 replicas and each request went to one of them in Round Robin manner.
 ```shell
 kubectl logs hostinfo-client-5685c4946b-wcbmq
 2021/06/23 07:56:40 hostinfo-server-6589b974dd-4828c
