@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hostinfo-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hostinfo-client
+  template:
+    metadata:
+      labels:
+        app: hostinfo-client
+    spec:
+      containers:
+        - image: asia-northeast1-docker.pkg.dev/kzs-sandbox/toybox/hostinfo-client:v1
+          name: hostinfo-client
+          env:
+            - name: DOMAIN
+              value: "hostinfo-server.default.svc.cluster.local"
+            - name: PORT
+              value: "8080"
