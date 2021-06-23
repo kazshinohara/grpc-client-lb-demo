@@ -70,7 +70,7 @@ kubectl logs {{client_pod_name}}
 You will see the requests (Unary gRPC) from client to server have been load-balanced like below.
 The server has 3 replicas and each request went to one of them in Round Robin manner.
 ```shell
-kubectl logs hostinfo-client-5685c4946b-wcbmq
+kubectl logs hostinfo-client-5685c4946b-wcbmq -f
 2021/06/23 07:56:40 hostinfo-server-6589b974dd-4828c
 2021/06/23 07:56:41 hostinfo-server-6589b974dd-zlz6x
 2021/06/23 07:56:42 hostinfo-server-6589b974dd-5cs69
