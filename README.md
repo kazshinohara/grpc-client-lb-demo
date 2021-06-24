@@ -3,8 +3,33 @@
 A demo application shows gRPC Client-side load balancing with k8s headless services in DNS Round Robin manner.
 
 ## How to use
-### 1. build container images
-Note: please make your own [Artifact Registry repo](https://cloud.google.com/artifact-registry/docs/docker/quickstart) in advance.
+
+### 1. Preparation
+
+Set your preferred Google Cloud region name.
+```shell
+export REGION_NAME={{REGION_NAME}}
+```
+
+Set your Google Cloud Project ID
+```shell
+export PROJECT_ID={{PROJECT_ID}}
+```
+
+Set your Artifact Registry repository name
+```shell
+export REPO_NAME={{REPO_NAME}}
+```
+
+Enable Google Cloud APIs
+```shell
+gcloud services enable \
+  artifactregistry.googleapis.com \
+  cloudbuild.googleapis.com 
+```
+
+### 2. build container images
+Note: please make your own [Artifact Registry repo](https://cloud.google.com/artifact-registry/docs/docker/quickstart) in advance, if you don't have it yet.
 
 #### Build the client image
 ```shell
@@ -14,7 +39,7 @@ git clone git@github.com:kazshinohara/grpc-client-lb-demo.git
 cd grpc-client-lb-demo/hostinfo-client
 ```
 ```shell
-gcloud builds submit --tag asia-northeast1-docker.pkg.dev/{{project_id}}/{{repo_name}}/hostinfo-client:v1
+gcloud builds submit --tag ${REGION_NAME}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/hostinfo-client:v1
 ```
 
 #### Build the server image
@@ -22,10 +47,10 @@ gcloud builds submit --tag asia-northeast1-docker.pkg.dev/{{project_id}}/{{repo_
 cd ../hostifno-server
 ```
 ```shell
-gcloud builds submit --tag asia-northeast1-docker.pkg.dev/{{project_id}}/{{repo_name}}/hostinfo-server:v1
+gcloud builds submit --tag ${REGION_NAME}-docker.pkg.dev/${PROJECT_ID}/${REPO_NAME}/hostinfo-server:v1
 ```
 
-### 2. Replace the image paths with yours in k8s manifests
+### 3. Replace the image paths with yours in k8s manifests
 #### Update client.yaml
 ```shell
 cd ../hostinfo-client
@@ -42,7 +67,7 @@ cd ../hostinfo-server
 vim server.yaml
 ```
 
-### 3. Deploy containers to your GKE cluster
+### 4. Deploy containers to your GKE cluster
 #### Deploy server (must be done at first)
 ```shell
 kubectl apply -f server.yaml
@@ -56,7 +81,7 @@ cd ../hostinfo-client
 kubeclt apply -f client.yaml
 ```
 
-### 4. Check the behavior
+### 5. Check the behavior
 #### Confirm the client pod name
 ```shell
 kubectl get pods | grep hostinfo-client
