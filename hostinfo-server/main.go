@@ -25,7 +25,7 @@ func (s *TestServer) GetHostInfo(ctx context.Context, empty *emptypb.Empty) (*pb
 		fmt.Printf("%v", err)
 	}
 	log.Printf("request received")
-	return &pb.HostInfo{HostnameAndIp: string(hostname)}, nil
+	return &pb.HostInfo{Hostname: string(hostname)}, nil
 }
 
 func main(){

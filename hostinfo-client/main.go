@@ -28,8 +28,7 @@ func main() {
 		if err != nil {
 			log.Fatalf("could not get hostinfo: %v", err)
 		}
-		log.Printf(r.HostnameAndIp)
+		log.Printf(r.Hostname)
 		time.Sleep(time.Second * 1)
 	}
 }
-
