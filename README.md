@@ -2,6 +2,8 @@
 
 A demo application shows gRPC Client-side load balancing with k8s headless services in DNS Round Robin manner.
 
+![demo_architecture](https://storage.googleapis.com/handson-images/grpc_client_lb.png)
+
 ## How to use
 
 ### 1. Preparation
